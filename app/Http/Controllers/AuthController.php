@@ -24,6 +24,8 @@ class AuthController extends Controller
         ], 401);
     }
 
+    $user->tokens()->delete();
+
     $token = $user->createToken('enzama-token')->plainTextToken;
 
     return response()->json([

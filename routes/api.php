@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ViajeController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Http\Request;
 
 // LOGIN (pública)
 Route::post('/login', [AuthController::class, 'login']);
