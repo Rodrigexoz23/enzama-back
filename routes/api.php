@@ -5,6 +5,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ViajeController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ReservaController;
 
 // LOGIN (pública)
 Route::post('/login', [AuthController::class, 'login']);
@@ -27,4 +28,10 @@ Route::middleware('auth:sanctum')->group(function () {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Sesión cerrada']);
     });
+
+    // RESERVAS
+    Route::post('/reservas', [ReservaController::class, 'store']);
+    Route::get('/viajes/{id}/clientas', [ReservaController::class, 'clientasPorViaje']);
+    Route::get('/clientas/{id}/viajes', [ReservaController::class, 'viajesPorClienta']);
+
 });
