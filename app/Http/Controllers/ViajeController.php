@@ -42,4 +42,11 @@ class ViajeController extends Controller
         DB::table('viajes')->where('id', $id)->delete();
         return response()->json(['mensaje' => 'Viaje eliminado correctamente']);
     }
+
+    public function all(){
+        return response()->json([
+            'data' => DB::table('viajes')->select('id', 'nombre')->get()
+        ]);
+    }
+
 }

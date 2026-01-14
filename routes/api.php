@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/viajes', [ViajeController::class, 'listarViajes']);
     Route::post('/viajes', [ViajeController::class, 'guardarViaje']);
     Route::delete('/viajes/{id}', [ViajeController::class, 'eliminarViaje']);
+    Route::get('/viajes/select', [ViajeController::class, 'all']);
 
     // LOGOUT
     Route::post('/logout', function (Request $request) {
