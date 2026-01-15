@@ -17,7 +17,6 @@ class ClienteController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('nombre', 'like', "%$search%")
                 ->orWhere('apellido', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%")
                 ->orWhere('telefono', 'like', "%$search%");
             });
         }
@@ -29,14 +28,12 @@ class ClienteController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:100',
             'apellido' => 'required|string|max:100',
-            'email' => 'required|email',
             'telefono' => 'required|string|max:10',
         ]);
 
         DB::table('clientes')->insert([
             'Nombre' => $request->nombre,
             'Apellido' => $request->apellido,
-            'Email' => $request->email,
             'Telefono' => $request->telefono,
             'Fecha_registro' => now(),
         ]);
