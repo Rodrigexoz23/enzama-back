@@ -13,7 +13,6 @@ class Viaje extends Model
         'nombre',
         'destino',
         'fecha_inicio',
-        'fecha_fin',
         'precio',
         'estado'
     ];

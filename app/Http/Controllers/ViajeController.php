@@ -28,7 +28,7 @@ class ViajeController extends Controller
             'nombre' => 'required|string|max:100',
             'destino' => 'required|string|max:100',
             'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date',
+            // 'fecha_fin' => 'required|date',
             'precio' => 'required|numeric',
         ]);
 
@@ -36,7 +36,7 @@ class ViajeController extends Controller
             'Nombre' => $request->nombre,
             'Destino' => $request->destino,
             'Fecha_inicio' => $request->fecha_inicio,
-            'Fecha_fin' => $request->fecha_fin,
+            // 'Fecha_fin' => $request->fecha_fin,
             'Precio' => $request->precio,
             'Estado' => $request->estado,
             'Fecha_registro' => now(),
