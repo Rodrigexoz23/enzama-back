@@ -9,11 +9,17 @@ class ViajeController extends Controller
 {
     public function listarViajes(Request $request){
         $perPage = $request->get('per_page', 10);
+        $search = $request->get('search');
 
-        $viajes = DB::table('viajes')
-            ->orderBy('id', 'desc')
-            ->paginate($perPage);
+        $query = DB::table('viajes')->orderBy('id', 'desc');
 
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'like', "%$search%")
+                ->orWhere('destino', 'like', "%$search%");
+            });
+        }
+        $viajes = $query->paginate($perPage);
         return response()->json($viajes);
     }
     
