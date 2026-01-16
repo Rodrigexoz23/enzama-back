@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Viaje;
 
 class ViajeController extends Controller
 {
     public function listarViajes(Request $request){
         $perPage = $request->get('per_page', 10);
         $search = $request->get('search');
-
-        $query = DB::table('viajes')->orderBy('id', 'desc');
+        $query = Viaje::orderBy('id', 'desc');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -28,31 +28,29 @@ class ViajeController extends Controller
             'nombre' => 'required|string|max:100',
             'destino' => 'required|string|max:100',
             'fecha_inicio' => 'required|date',
-            // 'fecha_fin' => 'required|date',
-            'precio' => 'required|numeric',
+            'precio' => 'required|numeric|min:0',
         ]);
 
-        DB::table('viajes')->insert([
-            'Nombre' => $request->nombre,
-            'Destino' => $request->destino,
-            'Fecha_inicio' => $request->fecha_inicio,
-            // 'Fecha_fin' => $request->fecha_fin,
-            'Precio' => $request->precio,
-            'Estado' => $request->estado,
-            'Fecha_registro' => now(),
+        $viaje = Viaje::create([
+            'nombre' => $request->nombre,
+            'destino' => $request->destino,
+            'fecha_inicio' => $request->fecha_inicio,
+            'precio' => $request->precio,
+            'descuento' => $request->descuento ?? 0,
+            'estado' => $request->estado ?? 'activo',
         ]);
-
         return response()->json(['mensaje' => 'Viaje agregado correctamente']);
     }
+
     public function eliminarViaje($id){
-        DB::table('viajes')->where('id', $id)->delete();
-        return response()->json(['mensaje' => 'Viaje eliminado correctamente']);
+        $viaje = Viaje::findOrFail($id);
+        $viaje->delete();
+        return response()->json(['mensaje'=>'Viaje eliminado correctamente']);
     }
 
     public function all(){
-        return response()->json([
-            'data' => DB::table('viajes')->select('id', 'nombre')->get()
-        ]);
+        $viajes = Viaje::select('id', 'nombre')->get();
+        return response()->json(['data' => $viajes]);
     }
 
 }
